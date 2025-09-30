@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muscle Gain Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1>MUSCLE GAIN TRACKER</h1>
+            <div class="current-weight">
+                <label for="weight-input">Current Weight (kg):</label>
+                <input type="number" id="weight-input" value="56.85" step="0.1" min="0">
+                <button class="btn btn--sm" onclick="updateWeight()">UPDATE</button>
+            </div>
+        </header>
+
+        <nav class="app-nav">
+            <button class="nav-btn active" onclick="showSection('dashboard')">DASHBOARD</button>
+            <button class="nav-btn" onclick="showSection('food-log')">FOOD LOG</button>
+            <button class="nav-btn" onclick="showSection('recipes')">RECIPES</button>
+            <button class="nav-btn" onclick="showSection('shopping')">SHOPPING</button>
+            <button class="nav-btn" onclick="showSection('exercise')">EXERCISE</button>
+            <button class="nav-btn" onclick="showSection('progress')">PROGRESS</button>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="app-section active">
+            <h2>DAILY TARGETS</h2>
+            <div class="macro-grid">
+                <div class="macro-card">
+                    <h3>CALORIES</h3>
+                    <div class="macro-value">
+                        <span id="calories-current">0</span> / <span id="calories-target">2163</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="calories-progress"></div>
+                    </div>
+                </div>
+                <div class="macro-card">
+                    <h3>PROTEIN (g)</h3>
+                    <div class="macro-value">
+                        <span id="protein-current">0</span> / <span id="protein-target">91</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="protein-progress"></div>
+                    </div>
+                </div>
+                <div class="macro-card">
+                    <h3>CARBS (g)</h3>
+                    <div class="macro-value">
+                        <span id="carbs-current">0</span> / <span id="carbs-target">315</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="carbs-progress"></div>
+                    </div>
+                </div>
+                <div class="macro-card">
+                    <h3>FAT (g)</h3>
+                    <div class="macro-value">
+                        <span id="fat-current">0</span> / <span id="fat-target">60</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="fat-progress"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <button class="btn btn--primary" onclick="showSection('food-log')">ADD FOOD</button>
+                <button class="btn btn--outline" onclick="resetDay()">RESET DAY</button>
+            </div>
+        </section>
+
+        <!-- Food Log Section -->
+        <section id="food-log" class="app-section">
+            <h2>DAILY FOOD LOG</h2>
+            <div class="food-entry">
+                <h3>ADD FOOD MANUALLY</h3>
+                <div class="form-group">
+                    <input type="text" id="food-name" placeholder="Food name" class="form-control">
+                </div>
+                <div class="macro-inputs">
+                    <input type="number" id="food-calories" placeholder="Calories" class="form-control" min="0">
+                    <input type="number" id="food-protein" placeholder="Protein (g)" class="form-control" min="0">
+                    <input type="number" id="food-carbs" placeholder="Carbs (g)" class="form-control" min="0">
+                    <input type="number" id="food-fat" placeholder="Fat (g)" class="form-control" min="0">
+                </div>
+                <button class="btn btn--primary" onclick="addManualFood()">ADD FOOD</button>
+            </div>
+            <div class="todays-foods">
+                <h3>TODAY'S FOODS</h3>
+                <div id="food-list"></div>
+            </div>
+        </section>
+
+        <!-- Recipes Section -->
+        <section id="recipes" class="app-section">
+            <h2>RECIPE DATABASE</h2>
+            <div class="recipe-search">
+                <input type="text" id="recipe-search" placeholder="Search recipes..." class="form-control">
+            </div>
+            <div id="recipe-list" class="recipe-grid"></div>
+        </section>
+
+        <!-- Shopping Section -->
+        <section id="shopping" class="app-section">
+            <h2>WEEKLY SHOPPING LIST</h2>
+            <div class="shopping-summary">
+                <div class="total-cost">
+                    TOTAL COST: €<span id="total-cost">0.00</span>
+                </div>
+            </div>
+            <div id="shopping-list" class="shopping-items"></div>
+        </section>
+
+        <!-- Exercise Section -->
+        <section id="exercise" class="app-section">
+            <h2>DAILY EXERCISE</h2>
+            <div class="exercise-categories">
+                <div class="exercise-category">
+                    <h3>MORNING STRETCHING</h3>
+                    <div id="morning-stretches"></div>
+                </div>
+                <div class="exercise-category">
+                    <h3>OFFICE MOVEMENT</h3>
+                    <div id="office-movements"></div>
+                </div>
+                <div class="exercise-category">
+                    <h3>MUSCLE BUILDING</h3>
+                    <div id="muscle-building"></div>
+                </div>
+                <div class="exercise-category">
+                    <h3>CARDIO</h3>
+                    <div id="cardio"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="app-section">
+            <h2>PROGRESS TRACKING</h2>
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <h3>CURRENT WEIGHT</h3>
+                    <div class="stat-value" id="current-weight-display">56.85 kg</div>
+                </div>
+                <div class="stat-card">
+                    <h3>TARGET GAIN</h3>
+                    <div class="stat-value">0.5-1 kg/week</div>
+                </div>
+                <div class="stat-card">
+                    <h3>DAYS TRACKED</h3>
+                    <div class="stat-value" id="days-tracked">1</div>
+                </div>
+            </div>
+            <div class="weight-history">
+                <h3>WEIGHT HISTORY</h3>
+                <div id="weight-chart" class="chart-container" style="position: relative; height: 300px;">
+                    <canvas></canvas>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
